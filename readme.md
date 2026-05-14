@@ -3,17 +3,20 @@ Generates a return shipment code by automating a web form using Playwright.
 It exposes a FastAPI endpoint and runs inside a Docker container.
 
 ### Build image
-docker build -t return-code-service .
+`docker build -t return-code-service .`
 
 ### Run container
-docker run -p 8000:8000 return-code-service
+`docker run -p 8000:8000 return-code-service`
 
 ### Open API docs
-http://localhost:8000/docs
+`http://localhost:8000/docs`
 
 Endpoint:
-POST /pl-return-shipment-code
+`POST /pl-return-shipment-code`
+
+
 Request body:
+```json
 {
   "order_number": "V-12345678",
   "size": "s",
@@ -22,7 +25,7 @@ Request body:
   "phone_number": "777123456",
   "email": "john.doe@email.com"
 }
-
+```
 
 Field descriptions
 | Field        | Type   | Required | Notes                        |
@@ -36,14 +39,18 @@ Field descriptions
 
 Response 
 Success (200 OK)
+```json
 {
   "code": "ABC123XYZ"
 }
+```
 
 Error response (500)
+```json
 {
   "detail": "Failed to generate return code: Timeout error..."
 }
+```
 
 ### Notes
 
