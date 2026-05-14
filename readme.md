@@ -11,11 +11,11 @@ It exposes a FastAPI endpoint and runs inside a Docker container.
 ### Open API docs
 `http://localhost:8000/docs`
 
-Endpoint:
+### Endpoint:
 `POST /pl-return-shipment-code`
 
 
-Request body:
+### Request body:
 ```json
 {
   "order_number": "V-12345678",
@@ -27,7 +27,7 @@ Request body:
 }
 ```
 
-Field descriptions
+### Field descriptions:
 | Field        | Type   | Required | Notes                        |
 | ------------ | ------ | -------- | ---------------------------- |
 | order_number | string | yes      | Order reference used in form |
@@ -37,15 +37,15 @@ Field descriptions
 | phone_number | string | yes      | Phone number without +48     |
 | email        | string | yes      | Valid email address          |
 
-Response 
-Success (200 OK)
+## Response 
+### Success (200 OK)
 ```json
 {
   "code": "ABC123XYZ"
 }
 ```
 
-Error response (500)
+### Error response (500)
 ```json
 {
   "detail": "Failed to generate return code: Timeout error..."
