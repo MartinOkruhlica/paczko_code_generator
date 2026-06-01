@@ -29,7 +29,7 @@ def get_code(order_number, size, first_name, last_name, phone_number, email):
         try:
             with sync_playwright() as p:
                 browser = p.chromium.launch(
-                    headless=True,
+                    headless=False,
                     args=["--no-sandbox", "--disable-dev-shm-usage"]
                 )
 
@@ -46,7 +46,7 @@ def get_code(order_number, size, first_name, last_name, phone_number, email):
                 except Exception:
                     pass
 
-                page.locator("#orderNumber").fill(order_number)
+                page.locator("#orderNumber").fill("95814250")
                 page.locator("#description").fill(order_number)
 
                 page.locator('div[aria-label="Reason for returning"]').click()
@@ -64,6 +64,7 @@ def get_code(order_number, size, first_name, last_name, phone_number, email):
                     elif size == "l":
                         page.get_by_text("Large").click()
                     page.get_by_text("Save").click()
+                page.wait_for_load_state("networkidle")
                 page.get_by_text("Submit return").click()
                 code_locator = page.locator('span[aria-labelledby="qrCodeTitle"]')
                 code_locator.wait_for(timeout=PAGE_TIMEOUT_MS)
@@ -103,3 +104,8 @@ def code_endpoint(payload: CodeRequest):
             status_code=500,
             detail=f"Failed to generate return code: {str(e)}"
         )
+    
+
+
+if __name__ == "__main__":
+    print(get_code("V-12345678", "s", "Martin", "Okruhlica", "734930294", "info@najada.cz"))
